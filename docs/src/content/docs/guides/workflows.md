@@ -309,6 +309,8 @@ When you need to change the composition of a stack — remove a branch, combine 
 gh stack modify
 
 # In the TUI:
+#   ↑/k, Ctrl+P/Ctrl+K → move selection up
+#   ↓/j, Ctrl+N/Ctrl+J → move selection down
 #   x     → drop a branch
 #   d     → fold down (into branch below)
 #   u     → fold up (into branch above)

@@ -33,6 +33,14 @@ func keyMsg(k string) tea.KeyMsg {
 		return tea.KeyMsg(tea.Key{Type: tea.KeyEscape})
 	case "ctrl+c":
 		return tea.KeyMsg(tea.Key{Type: tea.KeyCtrlC})
+	case "ctrl+n":
+		return tea.KeyMsg(tea.Key{Type: tea.KeyCtrlN})
+	case "ctrl+p":
+		return tea.KeyMsg(tea.Key{Type: tea.KeyCtrlP})
+	case "ctrl+j":
+		return tea.KeyMsg(tea.Key{Type: tea.KeyCtrlJ})
+	case "ctrl+k":
+		return tea.KeyMsg(tea.Key{Type: tea.KeyCtrlK})
 	default:
 		// Single rune key like 'c', 'f', 'q', 'o'
 		return tea.KeyMsg(tea.Key{Type: tea.KeyRunes, Runes: []rune(k)})
@@ -92,6 +100,32 @@ func TestUpdate_KeyboardNavigation(t *testing.T) {
 	updated, _ = m.Update(keyMsg("up"))
 	m = updated.(Model)
 	assert.Equal(t, 0, m.cursor, "cursor should clamp at top")
+}
+
+func TestUpdate_AltNavigationKeys(t *testing.T) {
+	cases := []struct {
+		down string
+		up   string
+	}{
+		{"ctrl+n", "ctrl+p"},
+		{"ctrl+j", "ctrl+k"},
+		{"j", "k"},
+	}
+	for _, tc := range cases {
+		t.Run(tc.down+"/"+tc.up, func(t *testing.T) {
+			nodes := makeNodes("b1", "b2", "b3")
+			m := New(nodes, testTrunk, "0.0.1")
+			assert.Equal(t, 0, m.cursor)
+
+			updated, _ := m.Update(keyMsg(tc.down))
+			m = updated.(Model)
+			assert.Equal(t, 1, m.cursor, tc.down+" should move cursor down")
+
+			updated, _ = m.Update(keyMsg(tc.up))
+			m = updated.(Model)
+			assert.Equal(t, 0, m.cursor, tc.up+" should move cursor up")
+		})
+	}
 }
 
 func TestUpdate_ToggleCommits(t *testing.T) {

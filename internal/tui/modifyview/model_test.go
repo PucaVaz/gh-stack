@@ -370,6 +370,34 @@ func TestCursorNavigation(t *testing.T) {
 	assert.Equal(t, 0, m.cursor)
 }
 
+func TestCursorNavigation_AltKeys(t *testing.T) {
+	cases := []struct {
+		name string
+		down tea.KeyMsg
+		up   tea.KeyMsg
+	}{
+		{"ctrl+n/ctrl+p", tea.KeyMsg{Type: tea.KeyCtrlN}, tea.KeyMsg{Type: tea.KeyCtrlP}},
+		{"ctrl+j/ctrl+k", tea.KeyMsg{Type: tea.KeyCtrlJ}, tea.KeyMsg{Type: tea.KeyCtrlK}},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			nodes := []ModifyBranchNode{
+				makeNode("a", true, 0),
+				makeNode("b", false, 1),
+				makeNode("c", false, 2),
+			}
+			m := New(nodes, testTrunk, "1.0.0")
+			require.Equal(t, 0, m.cursor)
+
+			m = sendKey(t, m, tc.down)
+			assert.Equal(t, 1, m.cursor, "down should move cursor down")
+
+			m = sendKey(t, m, tc.up)
+			assert.Equal(t, 0, m.cursor, "up should move cursor up")
+		})
+	}
+}
+
 // --- Undo tests ---
 
 func TestUndoDrop(t *testing.T) {

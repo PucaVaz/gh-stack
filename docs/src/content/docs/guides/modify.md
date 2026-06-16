@@ -33,6 +33,10 @@ gh stack modify
 
 The TUI shows your stack as a vertical list of branches with PR information, commits, and files changed. Merged branches appear as locked rows that cannot be modified. Press `?` for a help overlay describing all operations.
 
+## Navigation
+
+Move the selection up and down the stack with the arrow keys, `k`/`j`, or the Unix/editor-style shortcuts `Ctrl+P`/`Ctrl+K` (up) and `Ctrl+N`/`Ctrl+J` (down).
+
 ## Operations
 
 ### Drop (`x`)

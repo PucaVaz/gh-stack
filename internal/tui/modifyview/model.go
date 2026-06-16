@@ -44,11 +44,11 @@ func (k modifyKeyMap) FullHelp() [][]key.Binding {
 
 var modifyKeys = modifyKeyMap{
 	Up: key.NewBinding(
-		key.WithKeys("up", "k"),
+		key.WithKeys("up", "k", "ctrl+p", "ctrl+k"),
 		key.WithHelp("↑/k", "up"),
 	),
 	Down: key.NewBinding(
-		key.WithKeys("down", "j"),
+		key.WithKeys("down", "j", "ctrl+n", "ctrl+j"),
 		key.WithHelp("↓/j", "down"),
 	),
 	MoveUp: key.NewBinding(

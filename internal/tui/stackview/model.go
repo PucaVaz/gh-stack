@@ -32,11 +32,11 @@ func (k keyMap) FullHelp() [][]key.Binding {
 
 var keys = keyMap{
 	Up: key.NewBinding(
-		key.WithKeys("up"),
+		key.WithKeys("up", "k", "ctrl+p", "ctrl+k"),
 		key.WithHelp("↑", "up"),
 	),
 	Down: key.NewBinding(
-		key.WithKeys("down"),
+		key.WithKeys("down", "j", "ctrl+n", "ctrl+j"),
 		key.WithHelp("↓", "down"),
 	),
 	ToggleCommits: key.NewBinding(
@@ -440,8 +440,8 @@ func (m Model) buildHeaderConfig() shared.HeaderConfig {
 		},
 		ShortcutColumns: 1,
 		Shortcuts: []shared.ShortcutEntry{
-			{Key: "↑", Desc: "up"},
-			{Key: "↓", Desc: "down"},
+			{Key: "↑/k", Desc: "up"},
+			{Key: "↓/j", Desc: "down"},
 			{Key: "c", Desc: "commits"},
 			{Key: "f", Desc: "files"},
 			{Key: "o", Desc: "open PR"},
